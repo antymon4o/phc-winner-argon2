@@ -236,7 +236,7 @@ int argon2id_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
                        ARGON2_VERSION_NUMBER);
 }
 
-static int argon2_compare(const uint8_t *b1, const uint8_t *b2, size_t len) {
+int argon2_compare(const uint8_t *b1, const uint8_t *b2, size_t len) {
     size_t i;
     uint8_t d = 0U;
 
@@ -449,4 +449,10 @@ size_t argon2_encodedlen(uint32_t t_cost, uint32_t m_cost, uint32_t parallelism,
   return strlen("$$v=$m=,t=,p=$$") + strlen(argon2_type2string(type, 0)) +
          numlen(t_cost) + numlen(m_cost) + numlen(parallelism) +
          b64len(saltlen) + b64len(hashlen) + numlen(ARGON2_VERSION_NUMBER) + 1;
+}
+
+
+
+int argon2_decode_string(argon2_context* ctx, const char* str, argon2_type type) {
+	return decode_string(ctx, str, type);
 }

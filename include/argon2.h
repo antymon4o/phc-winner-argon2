@@ -430,6 +430,23 @@ ARGON2_PUBLIC size_t argon2_encodedlen(uint32_t t_cost, uint32_t m_cost,
                                        uint32_t parallelism, uint32_t saltlen,
                                        uint32_t hashlen, argon2_type type);
 
+
+ARGON2_PUBLIC int argon2_compare(const uint8_t* b1, const uint8_t* b2, size_t len);
+
+/*
+* Decodes an Argon2 hash string into the provided structure 'ctx'.
+* The only fields that must be set prior to this call are ctx.saltlen and
+* ctx.outlen (which must be the maximal salt and out length values that are
+* allowed), ctx.salt and ctx.out (which must be buffers of the specified
+* length), and ctx.pwd and ctx.pwdlen which must hold a valid password.
+*
+* Invalid input string causes an error. On success, the ctx is valid and all
+* fields have been initialized.
+*
+* Returned value is ARGON2_OK on success, other ARGON2_ codes on error.
+*/
+ARGON2_PUBLIC int argon2_decode_string(argon2_context* ctx, const char* str, argon2_type type);
+
 #if defined(__cplusplus)
 }
 #endif
